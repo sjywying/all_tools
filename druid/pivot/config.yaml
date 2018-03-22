@@ -1,0 +1,55 @@
+# The port on which the Pivot server will listen on.
+port: 9095
+
+# Pivot runtime directory
+varDir: /data/imply-2.2.3/var/pivot
+
+userMode: native-users
+
+defaultAdminPass: 'pangdun123'
+#
+# Pivot Settings (clusters and dataSources) can be stored in three ways.
+# Choose just one option and comment out the others.
+#
+#  1) Stored in a file in varDir, editable at runtime with Settings View. Not suitable for running in a cluster.
+#  2) Stored in a database, editable at runtime with Settings View. Works well with a cluster of Pivot servers.
+#
+
+#
+# 1) File-backed settings (not suitable for running in a cluster)
+#
+
+#settingsLocation:
+#  location: file
+#  format: 'json-pretty'
+#  initialSettings:
+#    clusters:
+#      - name: druid
+#        type: druid
+#        host: localhost:8082
+
+#
+# 2) Database-backed settings
+#
+druidRequestDecorator: './druid-request-decorator.js'
+
+settingsLocation:
+   location: mysql
+   uri: 'mysql://mobike001:dqZfiqwoLskL7ZkM@10.1.200.93:3306/pivot'
+   table: 'pivot_state'
+   initialSettings:
+     clusters:
+       - name: druid
+         type: druid
+         host: localhost:8082
+
+
+sessionStore:
+  storageType: mysql
+  host: 10.1.200.93
+  port: 3306
+  user: mobike001
+  password: dqZfiqwoLskL7ZkM
+  database: pivot
+  schema:
+    tableName: 'pivot_sessions'
